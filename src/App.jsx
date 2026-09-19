@@ -1,8 +1,10 @@
-import { useState } from 'react';
-import './App.css'
-import UserList from './component/UserList';
+import { useState, useMemo, useCallback } from "react";
+import "./App.css";
+// import UserList from './component/UserList';
+import Buttons from "./component/Buttons";
 
 // function App() {
+
 //   const initialUserList = [
 //   {
 //     id: 1,
@@ -36,17 +38,55 @@ import UserList from './component/UserList';
 
 // export default App
 
+// function App() {
+
+//   return (
+//     <>
+//   <UserList />
+//     </>
+//   )
+// }
+
+// export default App
 
 function App() {
+  const [number, setNumber] = useState(0);
+  const [name, setName] = useState("");
 
+  // const result = number*100
+  // console.log(result, "обчислююємо резалт");
 
+  const result = useMemo(() => {
+    console.log("обчислююємо резалт");
+    return number * 100;
+  }, [number]);
 
+  // const handleClick = () => {
+  //   console.log("component кнопка натиснута");
+    
+  // }
+
+  const handleClick = useCallback(()=>{
+    console.log("component кнопка натиснута");
+  }, [])
 
   return (
     <>
-  <UserList />
+      <h1>{result}</h1>
+      <button onClick={() => setNumber(number + 1)} type="button">
+        Збільшити
+      </button>
+      <input
+        value={name}
+        onChange={(evt) => setName(evt.target.value)}
+        type="text"
+      />
+      <h2>{name}</h2>
+
+
+      <Buttons onClick={handleClick}/>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
